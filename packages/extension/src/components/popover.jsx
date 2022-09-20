@@ -24,7 +24,7 @@ function Popover() {
     if (range) {
       const { commonAncestorContainer } = range;
       
-      if (commonAncestorContainer.parentElement.closest('div.rnotes-sidebar')) {
+      if (commonAncestorContainer.parentElement.closest('div.rnotes-sidebar') || commonAncestorContainer.parentElement.closest('div.ReactModalPortal')) {
         return null;
       }
     }

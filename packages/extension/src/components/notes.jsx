@@ -1,6 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { NotesContext } from '../context/notes';
 import NoteItem from './noteItem';
+import CategoryModal from './category';
 
 function Notes(props) {
   const {
@@ -9,10 +10,11 @@ function Notes(props) {
     onRemove,
     onComment
   } = useContext(NotesContext);
-  // console.log(999, notes)
+  const [visible, setVisible] = useState(false);
 
   const handleCategory = () => {
     // TODO:: 分类归档
+    setVisible(true);
   };
 
   return (
@@ -40,6 +42,10 @@ function Notes(props) {
           })
         }
       </div>
+      <CategoryModal
+        visible={visible}
+        onClose={() => {setVisible(false)}}
+      ></CategoryModal>
     </div>
   )
 }
