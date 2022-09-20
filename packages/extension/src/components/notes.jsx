@@ -9,7 +9,7 @@ function Notes(props) {
     onRemove,
     onComment
   } = useContext(NotesContext);
-  console.log(999, notes)
+  // console.log(999, notes)
 
   const handleCategory = () => {
     // TODO:: 分类归档

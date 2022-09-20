@@ -3,6 +3,8 @@ import Content from './components/content';
 import Popover from './components/popover';
 import Sidebar from './components/sidebar';
 import { NotesContext } from './context/notes';
+import wrapRange from './lib/wrap-range-text';
+import mockNotes from './mock/note';
 
 import './App.scss';
 
@@ -12,9 +14,17 @@ function App() {
   const title = document.title;
 
   // TODO:: 请求该链接是否有笔记
-  // useEffect(async () => {
-    
-  // }, [])
+  useEffect(() => {
+    const wraps = mockNotes.map((item, idx) => {
+      return {
+        id: idx + 1,
+        ...wrapRange(item)
+      };
+    });
+
+    setNotes(wraps);
+  }, []);
+
   const onAdd = (data) => {
     setNotes(notes.concat([data]));
   };

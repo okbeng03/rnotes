@@ -34,7 +34,10 @@ function getRangeNote(node, offset) {
     };
   }
 
-  return {};
+  return {
+    node,
+    offset
+  };
 }
 
 // 序列化时获取节点偏移相对于父级的偏移量
@@ -54,7 +57,6 @@ function getOffset(parent, node, offset) {
 // 反序列化
 export function deSerialize(note) {
   const { container, startContainer, startOffset, endContainer, endOffset } = note;
-
   // if (startOffset === 0 && endOffset === 0) {
   //   // 完整节点文本
   //   const node = document.querySelector(container);

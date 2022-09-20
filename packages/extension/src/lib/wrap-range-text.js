@@ -147,6 +147,7 @@ function wrapRangeText(range, text, id) {
 
   wrapperObj.nodes = nodes;
   wrapperObj.unwrap = function () {
+    // debugger
     if (this.nodes.length) {
       undo(this.nodes);
       this.nodes = [];
