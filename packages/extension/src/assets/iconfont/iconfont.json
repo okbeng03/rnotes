@@ -1,0 +1,30 @@
+{
+  "id": "3610097",
+  "name": "rnotes",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5809108",
+      "name": "归档",
+      "font_class": "guidang1",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "15346594",
+      "name": "划线",
+      "font_class": "huaxian",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "19110106",
+      "name": "icon_icon_我的笔记",
+      "font_class": "icon_icon_wodebiji",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    }
+  ]
+}

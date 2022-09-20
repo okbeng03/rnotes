@@ -1,0 +1,147 @@
+@import "./assets/iconfont/iconfont.css";
+@import "./assets/css/markdown.css";
+
+$primaryColor: #96cb87;
+$primaryColorHover: #BDD9A6;
+
+.rnotes-popover {
+  border-radius: 4px;
+  background-color: #1E1E1E;
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-flex;
+    padding: 6px;
+  }
+
+  button {
+    display: inline-block;
+    padding: 0;
+    border: 0 none;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+    background-color: transparent;
+  }
+}
+
+.rnotes-highlight {
+  background-color: #f7ec6f;
+}
+
+.rnotes-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  .rnotes-sidebar-expand {
+    margin: 6px 6px 0 0;
+    height: 48px;
+    width: 48px;
+    line-height: 48px;
+    border-radius: 24px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    background-color: $primaryColor;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+
+    &:hover {
+      background-color: $primaryColorHover;
+    }
+  }
+
+  &.rnotes-sidebar-left {
+    right: auto;
+    left: 0;
+  }
+}
+
+.rnotes-notes {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  display: flex;
+  flex-direction: column;
+  width: 386px;
+  height: 100%;
+  box-shadow: -6px 0 16px -8px #00000014, -9px 0 28px #0000000d, -12px 0 48px 16px #00000008;
+  background-color: #fff;
+}
+
+.rnotes-notes-header {
+  display: flex;
+  align-items: center;
+  height: 54px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+  background-color: $primaryColor;
+
+  h3 {
+    display: inline-flex;
+    flex: 1;
+    padding-left: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .rnotes-notes-header-action {
+    span {
+      display: inline-block;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+  }
+}
+
+.rnotes-notes-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.rnotes-note-item {
+  margin: 12px;
+  border: 1px solid rgba(0, 0, 0, .06);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  .rnotes-note-item-content,
+  .rnotes-note-item-comment {
+    padding: 8px;
+  }
+}
+
+.rnotes-note-item-action {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, .06);
+
+  li {
+    flex: 1;
+    margin: 12px 0;
+    border-right: 1px solid rgba(0, 0, 0, .06);
+    list-style-type: none;
+    text-align: center;
+    color: #666;
+
+    &:last-child {
+      border-right: 0 none;
+    }
+
+    span {
+      cursor: pointer;
+    }
+  }
+}

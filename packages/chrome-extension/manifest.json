@@ -1,0 +1,21 @@
+{
+  "name": "rnotes",
+  "description": "A Web Reading Notes",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": "public/logo.png",
+    "default_title": "A Web Reading Notes"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": ["src/content.css"],
+      "js": ["src/content.js"]
+    }
+  ]
+}
