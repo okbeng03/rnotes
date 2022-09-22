@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Param, HttpException, HttpStatus } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
+import { AuthGuard } from '@nestjs/passport';
 import { PageService } from "./page.service";
 
 @Controller('api/page')
 export class PageController {
   constructor(private pageService: PageService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('update')
   async update(@Body() pageDto: any) {
     try {
@@ -14,6 +16,7 @@ export class PageController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id/notes/')
   async notes(@Param('id') id) {
     try {
@@ -23,6 +26,7 @@ export class PageController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('query')
   async query(@Body() pageDto: any) {
     try {

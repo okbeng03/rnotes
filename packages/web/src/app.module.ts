@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { PageModule } from './page/page.module';
 import { NoteModule } from './note/note.module';
+import { AuthModule } from './auth/auth.module';
 
 import config from './config';
 
@@ -34,7 +35,8 @@ import config from './config';
     UserModule,
     CategoryModule,
     PageModule,
-    NoteModule
+    NoteModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

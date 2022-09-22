@@ -3,9 +3,9 @@ import axios from '../lib/request';
 export const login = async function() {
   return await axios({
     method: 'post',
-    url: '/api/user/login',
+    url: '/api/login',
     data: {
-      loginName: 'okbeng',
+      username: 'okbeng',
       password: 'test1234'
     }
   });

@@ -16,8 +16,9 @@ function App() {
 
   useEffect(() => {
     async function fetch() {
-      // TODO:: 换成JWT
-      await login();
+      // mock:: 实际要消息传递过来
+      const {access_token} = await login();
+      window.token = access_token;
 
       const page = await queryNotes(href);
 

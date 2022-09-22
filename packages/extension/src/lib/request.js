@@ -1,15 +1,13 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  // baseURL: 'http://127.0.0.1:7096'
+  baseURL: 'http://127.0.0.1:7096'
 });
 
 instance.interceptors.request.use(request => {
-  // const token = Vue.ls.get(ACCESS_TOKEN)
-
-  // if (token) {
-  //   request.headers.token = token
-  // }
+  if (window.token) {
+    request.headers.Authorization = `Bearer ${window.token}`
+  }
 
   return request
 }, err => {

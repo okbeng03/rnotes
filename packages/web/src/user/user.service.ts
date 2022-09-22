@@ -28,7 +28,8 @@ export class UserService {
       return user
     }
 
-    throw new Error('账号/密码有误！')
+    // throw new Error('账号/密码有误！')
+    return null
   }
 
   // 我的分类

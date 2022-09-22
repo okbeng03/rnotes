@@ -7,6 +7,10 @@ export default () => {
       username: 'root',
       password: 'test1234',
       database: 'rnotes'
+    },
+    jwt: {
+      secret: 'rnotesSecretKey110120',
+      expire: '30d'
     }
   }
 };
