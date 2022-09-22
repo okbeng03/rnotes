@@ -3,6 +3,7 @@
 
 $primaryColor: #96cb87;
 $primaryColorHover: #BDD9A6;
+$borderColor: rgba(0, 0, 0, .06);
 
 .rnotes-popover {
   border-radius: 4px;
@@ -87,7 +88,7 @@ $primaryColorHover: #BDD9A6;
   font-size: 16px;
   line-height: 22px;
   color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, .06);
+  border-bottom: 1px solid $borderColor;
   background-color: $primaryColor;
 
   h3 {
@@ -103,6 +104,11 @@ $primaryColorHover: #BDD9A6;
       display: inline-block;
       margin-right: 6px;
       cursor: pointer;
+      font-family: "iconfont" !important;
+      font-size: 24px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
   }
 }
@@ -114,8 +120,8 @@ $primaryColorHover: #BDD9A6;
 
 .rnotes-note-item {
   margin: 12px;
-  border: 1px solid rgba(0, 0, 0, .06);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid $borderColor;
+  box-shadow: 0 2px 4px $borderColor;
 
   .rnotes-note-item-content,
   .rnotes-note-item-comment {
@@ -126,12 +132,12 @@ $primaryColorHover: #BDD9A6;
 .rnotes-note-item-action {
   display: flex;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, .06);
+  border-top: 1px solid $borderColor;
 
   li {
     flex: 1;
     margin: 12px 0;
-    border-right: 1px solid rgba(0, 0, 0, .06);
+    border-right: 1px solid $borderColor;
     list-style-type: none;
     text-align: center;
     color: #666;
@@ -147,5 +153,41 @@ $primaryColorHover: #BDD9A6;
 }
 
 .ReactModal__Content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  border-color: $borderColor !important;
+}
 
+.rnotes-modal-header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  border-bottom: 1px solid $borderColor;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.rnotes-modal-body {
+  flex: 1;
+  padding: 20px;
+}
+
+.rnotes-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  border-top: 1px solid $borderColor;
+
+  input,
+  button {
+    margin: 0 3px;
+    height: 32px;
+    box-sizing: border-box;
+  }
 }

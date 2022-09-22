@@ -31,7 +31,7 @@ function NoteItem(props) {
 
   const handleCommentCancel = () => {
     setEditable(false);
-    setComment(note.comment);
+    setComment(note?.comment || '');
   };
 
   const handlerComment = async () => {

@@ -21,12 +21,11 @@ function Sidebar(props) {
         expand ? (
           <Notes>
             <>
-              <span onClick={handleChangeSide}>
-                {
-                  side === 'left' ? '右侧' : '左侧'
-                }
-              </span>
-              <span onClick={() => {setExpand(false)}}>收起</span>
+              {
+                side === 'left' ? <span onClick={handleChangeSide} title="右侧">&#xeb1e;</span>
+                  : <span onClick={handleChangeSide} title="左侧">&#xeb28;</span>
+              }
+              <span onClick={() => {setExpand(false)}} title="收起">&#xe609;</span>
             </>
           </Notes>
         ) : (

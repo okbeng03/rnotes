@@ -21,10 +21,10 @@ function Notes(props) {
       <div className="rnotes-notes-header">
         <h3>{page.title}</h3>
         <div className="rnotes-notes-header-action">
+          <span onClick={handleCategory} title="归档">&#xe666;</span>
           {
             props.children
           }
-          <span onClick={handleCategory}>归档</span>
         </div>
       </div>
       <div className="rnotes-notes-body">

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Tree from 'rc-tree';
-import { get } from 'lodash';
 import 'rc-tree/assets/index.css';
 import { queryMyCategories, addCategory, updatePage } from '../apis';
 

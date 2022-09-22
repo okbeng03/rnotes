@@ -132,7 +132,6 @@ function wrapRangeText(range, text, id) {
   const { range: r, note: n } = range instanceof Range ? serialize(range, text, id) : deSerialize(range, text, id);
   range = r;
   const note = n;
-  // console.log(note, range);
 
   if (!range) {
     return null

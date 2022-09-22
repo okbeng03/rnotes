@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import selection from '../lib/selection';
 import { NotesContext } from '../context/notes';
 
-function Action(props) {
+function Action() {
   const { onAdd } = useContext(NotesContext);
   const onLine = () => {
     const { note, wrapper } = selection.note();
@@ -10,8 +10,8 @@ function Action(props) {
     onAdd({
       note,
       wrapper
-    })
-  }
+    });
+  };
 
   return (
     <ul>

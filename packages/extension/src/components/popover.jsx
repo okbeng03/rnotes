@@ -15,7 +15,7 @@ function Popover() {
     return null
   }
 
-  // 排除侧边栏的选中
+  // 排除侧边栏、分类弹窗的选中
   const selection = window.getSelection()
   
   if (selection.rangeCount) {
