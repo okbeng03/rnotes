@@ -16,7 +16,7 @@ export class NoteService {
   // 添加分类
   async add(data: any): Promise<number> {
     try {
-      const { title, href } = data
+      const { title, href, categoryId } = data
       const note: Note = data.note
       let pageId: number = data.pageId
 
@@ -24,7 +24,8 @@ export class NoteService {
         // 先创建页面
         pageId = await this.pageService.add({
           title,
-          href
+          href,
+          categoryId
         } as Page)
       }
 

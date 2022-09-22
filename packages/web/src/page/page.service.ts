@@ -66,14 +66,14 @@ export class PageService {
       select: [
         'id',
         'title',
-        'category',
+        'categoryId',
         'notes'
       ],
       where: {
         ...data
       }
     })
-
+    console.log(111, page)
     return page
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import markdownIt from '../lib/markdown';
+import { removeNote, updateNote } from '../apis';
 
 function NoteItem(props) {
   const {
@@ -11,13 +12,15 @@ function NoteItem(props) {
     id,
     note,
     wrapper,
-    comment = ''
   } = props.note;
   const [editable, setEditable] = useState(false);
-  const [commentValue, setComment] = useState(comment);
+  const [commentValue, setComment] = useState(note?.comment || '');
 
-  const handlerRemove = () => {
-    // TODO:: 删除接口
+  const handlerRemove = async () => {
+    await removeNote({
+      id
+    });
+
     wrapper.unwrap();
     onRemove(id);
   };
@@ -28,11 +31,15 @@ function NoteItem(props) {
 
   const handleCommentCancel = () => {
     setEditable(false);
-    setComment(comment);
+    setComment(note.comment);
   };
 
-  const handlerComment = () => {
-    // TODO:: 备注接口
+  const handlerComment = async () => {
+    await updateNote({
+      id,
+      comment: commentValue
+    });
+
     onComment(id, commentValue);
     setEditable(false);
   };
@@ -45,7 +52,7 @@ function NoteItem(props) {
     <div className="rnotes-note-item">
       <div className="rnotes-note-item-content markdown-body"
         dangerouslySetInnerHTML={{
-          __html: markdownIt.render(note.md + '\n > ' + comment.replace(/\n/g, '\n > '))
+          __html: markdownIt.render(note.md + '\n > ' + (note.comment ? note.comment.replace(/\n/g, '\n > ') : ''))
         }}
       >
       </div>

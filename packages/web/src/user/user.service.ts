@@ -63,6 +63,9 @@ function formatToTree(ary, pid) {
         item.children = children;
       }
 
-      return item;
+      return {
+        key: item.id,
+        ...item
+      };
     });
 }

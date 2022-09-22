@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Category } from 'src/category/category.entity';
 import { Note } from 'src/note/note.entity';
 
@@ -8,7 +8,13 @@ export class Page {
   id: number;
 
   @ManyToOne(() => Category, category => category.pages)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
+
+  @Column({
+    name: 'category_id'
+  })
+  categoryId: number;
 
   @Column()
   title: string;

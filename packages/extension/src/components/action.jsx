@@ -2,16 +2,12 @@ import { useContext } from 'react';
 import selection from '../lib/selection';
 import { NotesContext } from '../context/notes';
 
-let id = 1;
-
 function Action(props) {
   const { onAdd } = useContext(NotesContext);
   const onLine = () => {
     const { note, wrapper } = selection.note();
 
-    // TODO:: 调取添加接口
     onAdd({
-      id: id++,
       note,
       wrapper
     })

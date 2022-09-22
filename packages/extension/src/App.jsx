@@ -4,31 +4,75 @@ import Popover from './components/popover';
 import Sidebar from './components/sidebar';
 import { NotesContext } from './context/notes';
 import wrapRange from './lib/wrap-range-text';
-import mockNotes from './mock/note';
+import { login, queryNotes, addNote, queryMyCategories } from './apis';
 
 import './App.scss';
 
 function App() {
-  const [notes, setNotes] = useState([])
+  const [page, setPage] = useState();
+  const [notes, setNotes] = useState([]);
   const href = window.location.href;
   const title = document.title;
 
-  // TODO:: 请求该链接是否有笔记
   useEffect(() => {
-    const wraps = mockNotes.map((item, idx) => {
-      return {
-        id: idx + 1,
-        ...wrapRange(item)
-      };
-    });
+    async function fetch() {
+      await login();
 
-    setNotes(wraps);
+      const page = await queryNotes(href);
+
+      if (page) {
+        setPage({
+          id: page.id,
+          title: page.title,
+          categoryId: page.categoryId
+        });
+      } else {
+        const categories = await queryMyCategories();
+
+        setPage({
+          title,
+          categoryId: categories[0]?.id
+        });
+      }
+
+      if (page?.notes?.length) {
+        const wraps = page.notes.map((item) => {
+          return {
+            id: item.id,
+            ...wrapRange(item)
+          };
+        });
+
+        setNotes(wraps);
+      }
+    };
+
+    fetch();
   }, []);
 
-  const onAdd = (data) => {
-    setNotes(notes.concat([data]));
+  // 添加笔记
+  const onAdd = async (data) => {
+    const params = {
+      note: data.note
+    };
+
+    if (page.id) {
+      params.pageId = page.id;
+    } else {
+      params.href = href;
+      params.title = title;
+      params.categoryId = page.categoryId;
+    }
+
+    const id = await addNote(params);
+
+    setNotes(notes.concat([{
+      id,
+      ...data
+    }]));
   };
 
+  // 移除笔记
   const onRemove = (id) => {
     const idx = notes.findIndex(note => note.id === id);
 
@@ -38,20 +82,22 @@ function App() {
     }
   };
 
+  // 添加笔记备注
   const onComment = (id, comment) => {
     const idx = notes.findIndex(note => note.id === id);
 
     if (idx > -1) {
+      const note = notes[idx];
+      note.note.comment = comment;
       notes.splice(idx, 1, {
-        ...notes[idx],
-        comment
+        ...notes[idx]
       });
       setNotes([...notes]);
     }
   };
 
   const notesContext = {
-    title,
+    page,
     notes,
     onAdd,
     onRemove,

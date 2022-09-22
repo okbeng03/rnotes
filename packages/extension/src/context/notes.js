@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 export const NotesContext = createContext({
-  title: '',
+  page: {},
   notes: [],
   onAdd: () => {},
   onRemove: () => {},

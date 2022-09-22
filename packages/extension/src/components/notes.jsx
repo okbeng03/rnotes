@@ -5,7 +5,7 @@ import CategoryModal from './category';
 
 function Notes(props) {
   const {
-    title,
+    page,
     notes,
     onRemove,
     onComment
@@ -13,14 +13,13 @@ function Notes(props) {
   const [visible, setVisible] = useState(false);
 
   const handleCategory = () => {
-    // TODO:: 分类归档
     setVisible(true);
   };
 
   return (
     <div className="rnotes-notes">
       <div className="rnotes-notes-header">
-        <h3>{title}</h3>
+        <h3>{page.title}</h3>
         <div className="rnotes-notes-header-action">
           {
             props.children
@@ -43,8 +42,10 @@ function Notes(props) {
         }
       </div>
       <CategoryModal
+        page={page}
         visible={visible}
         onClose={() => {setVisible(false)}}
+        onOk={() => {setVisible(false)}}
       ></CategoryModal>
     </div>
   )

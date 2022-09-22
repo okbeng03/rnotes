@@ -1,35 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Tree from 'rc-tree';
 import { get } from 'lodash';
 import 'rc-tree/assets/index.css';
+import { queryMyCategories, addCategory, updatePage } from '../apis';
 
 function CategoryModal(props) {
-  const [categorys, setCategorys] = useState([
-    {
-      key: 1,
-      title: '其他'
-    },
-    {
-      key: 2,
-      title: '前端',
-      children: [
-        {
-          key: 3,
-          title: 'React'
-        }
-      ]
-    }
-  ]);
-  const [newCategory, setNewCategory] = useState('');
-  const [selected, setSelected] = useState(null);
-
   const {
+    page,
     visible = false,
     onClose,
-    onOk,
-    onCancel
+    onOk
   } = props;
+  const [categorys, setCategorys] = useState([]);
+  const [newCategory, setNewCategory] = useState('');
+  const [selected, setSelected] = useState([page?.categoryId]);
+
+  useEffect(() => {
+    async function getData() {
+      const categories = await queryMyCategories();
+      setCategorys(categories);
+    }
+
+    getData();
+  }, []);
 
   const modalProps = {
     isOpen: visible,
@@ -37,66 +31,58 @@ function CategoryModal(props) {
     // className: 'rnotes-modal',
     style: {
       content: {
-        top: '50%',
+        top: '0',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
+        transform: 'translate(-50%, 0)',
         width: '600px',
-        height: '80%'
+        height: '60%'
       }
     },
     ariaHideApp: false
   };
-  const handleSelect = (selectedKeys, e) => {
-    const { selected, node } = e;
-
-    if (selected) {
-      setSelected({
-        id: node.key,
-        pos: node.pos
-      });
-    } else {
-      setSelected(null);
+  const handleSelect = (selectedKeys) => {
+    console.log(selectedKeys)
+    if (!selectedKeys.length) {
+      return;
     }
+
+    setSelected(selectedKeys);
   };
   const handleChange = (event) => {
     setNewCategory(event.target.value);
   };
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!newCategory) {
       alert('请输入文件夹名称!');
       return;
     }
     
-    // TODO:: 添加新分类接口
+    const id = await addCategory({
+      title: newCategory,
+      parentId: selected?.id
+    });
 
-    if (!selected) {
-      setCategorys([
-        ...categorys,
-        {
-          key: 100,
-          title: newCategory
-        }
-      ])
-    } else {
-      const category = get(categorys, selected.pos.split('-').slice(1));
+    const categories = await queryMyCategories();
+    setCategorys(categories);
+    setNewCategory('');
 
-      if (!category.children) {
-        category.children = [];
-      }
-
-      category.children.push({
-        key: 100,
-        title: newCategory
-      });
-      setCategorys([
-        ...categorys
-      ]);
-
-      // TODO:: 自动打开父级，并选择新增的文件夹
+    setSelected([id]);
+  };
+  const handleOk = async() => {
+    if (!page?.id) {
+      alert('页面还未有任何笔记，不能归档！');
+      return;
     }
+
+    await updatePage({
+      id: page.id,
+      categoryId: selected[0]
+    });
+
+    onOk();
   };
 
   return (
@@ -110,6 +96,7 @@ function CategoryModal(props) {
         <Tree
           className='rnotes-category'
           treeData={categorys}
+          selectedKeys={selected}
           onSelect={handleSelect}
           showLine
           autoExpandParent
@@ -117,10 +104,14 @@ function CategoryModal(props) {
         </Tree>
       </div>
       <div className="rnotes-modal-footer">
-        <input placeholder='文件夹名称' value={newCategory} onChange={handleChange} />
-        <button onClick={handleAdd}>新文件夹</button>
-        <button>取消</button>
-        <button>保存</button>
+        <div className="rnotes-new-category">
+          <input placeholder='文件夹名称' value={newCategory} onChange={handleChange} />
+          <button onClick={handleAdd}>新文件夹</button>
+        </div>
+        <div>
+          <button onClick={onClose}>取消</button>
+          <button onClick={handleOk}>保存</button>
+        </div>
       </div>
     </Modal>
   );

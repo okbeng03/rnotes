@@ -74,30 +74,30 @@ export function deSerialize(note) {
   //   return {};
   // }
 
-  if (!startContainer && !endContainer) {
-    // debugger
-    // 同父级
-    const node = document.querySelector(container);
+  // if (!startContainer && !endContainer) {
+  //   // debugger
+  //   // 同父级
+  //   const node = document.querySelector(container);
 
-    if (node) {
-      const {node: startNode, offset: startOff} = getRangeNote(node, startOffset);
-      const {node: endNode, offset: endOff} = getRangeNote(node, endOffset);
+  //   if (node) {
+  //     const {node: startNode, offset: startOff} = getRangeNote(node, startOffset);
+  //     const {node: endNode, offset: endOff} = getRangeNote(node, endOffset);
 
-      if (startNode && endNode) {
-        const range = document.createRange();
+  //     if (startNode && endNode) {
+  //       const range = document.createRange();
 
-        range.setStart(startNode, startOff);
-        range.setEnd(endNode, endOff);
+  //       range.setStart(startNode, startOff);
+  //       range.setEnd(endNode, endOff);
 
-        return {
-          note,
-          range
-        };
-      }
+  //       return {
+  //         note,
+  //         range
+  //       };
+  //     }
 
-      return {};
-    }
-  }
+  //     return {};
+  //   }
+  // }
 
   // 不同父级
   const node = document.querySelector(container);
@@ -138,6 +138,7 @@ export function serialize(range, text) {
   const { startContainer, startOffset, endContainer, endOffset, commonAncestorContainer } = range;
   let startParent = startContainer;
   let start = startOffset;
+  let container = commonAncestorContainer;
 
   // debugger
   if (startContainer.nodeType === 3) {
@@ -202,32 +203,37 @@ export function serialize(range, text) {
   //   }
   // }
 
-  if (commonAncestorContainer.nodeType === 3
-    || startParent === endParent
-    || startParent === commonAncestorContainer || endParent === commonAncestorContainer) {
-    // 同父级节点
-    note.container = unique(startParent);
-    note.startOffset = startParent.textContent.indexOf(text);
-    note.endOffset = note.startOffset + text.length;
-
-    return {
-      range,
-      note
-    };
-  } else {
-    // 不同父节点
-    // debugger
-    note.container = unique(commonAncestorContainer);
-    note.startContainer = unique(startParent);
-    note.endContainer = unique(endParent);
-    note.startOffset = startContainer.nodeType === 3 ? getOffset(startParent, startContainer, startOffset)
-      : start;
-    note.endOffset = endContainer.nodeType === 3 ? getOffset(endParent, endContainer, endOffset)
-      : end + endParent.textContent.length;
-
-    return {
-      range,
-      note
-    };
+  if (commonAncestorContainer.nodeType === 3) {
+    container = commonAncestorContainer.parentNode;
   }
+
+  // if (commonAncestorContainer.nodeType === 3
+  //   || startParent === endParent
+  //   || startParent === commonAncestorContainer || endParent === commonAncestorContainer) {
+  //   // 同父级节点
+  //   note.container = unique(startParent);
+  //   note.startOffset = startParent.textContent.indexOf(text);
+  //   note.endOffset = note.startOffset + text.length;
+
+  //   return {
+  //     range,
+  //     note
+  //   };
+  // }
+  // } else {
+  // 不同父节点
+  // debugger
+  note.container = unique(container);
+  note.startContainer = unique(startParent);
+  note.endContainer = unique(endParent);
+  note.startOffset = startContainer.nodeType === 3 ? getOffset(startParent, startContainer, startOffset)
+    : start;
+  note.endOffset = endContainer.nodeType === 3 ? getOffset(endParent, endContainer, endOffset)
+    : end + endParent.textContent.length;
+
+  return {
+    range,
+    note
+  };
+  // }
 }
