@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, UseGuards, Request } from "@nestjs/common";
+import { Controller, Get, Post, Body, HttpException, HttpStatus, UseGuards, Request } from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from "./user.service";
 @Controller('api/user')
@@ -18,6 +18,15 @@ export class UserController {
   //     throw new HttpException(err.message, HttpStatus.EXPECTATION_FAILED)
   //   }
   // }
+
+  @Post('register')
+  async register(@Body() userDto: any) {
+    try {
+      return await this.userService.register(userDto)
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.EXPECTATION_FAILED)
+    }
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('category')

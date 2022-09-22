@@ -32,6 +32,17 @@ export class UserService {
     return null
   }
 
+  async register(data: User): Promise<any> {
+    try {
+      const user = this.userRepository.create(data)
+
+      await this.userRepository.save(user)
+      return user.id
+    } catch (err) {
+      throw err
+    }
+  }
+
   // 我的分类
   async category(userId): Promise<any []> {
     const user = await this.userRepository.findOne({
